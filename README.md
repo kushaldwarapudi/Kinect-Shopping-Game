@@ -1,1 +1,1 @@
-# Kinect-Shopping-Game
+# Kinect-Shopping-Game.
