@@ -3,15 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 using Windows.Kinect;
+using UnityEngine.Serialization;
 using Joint = Windows.Kinect.Joint;
 
 public class BodyView : MonoBehaviour
 {
-    public BodySourceManager bdsm;
-    public GameObject JointObject;
+    private BodySourceManager _BodyManager;
+    public GameObject BodySourceManager;
+    [FormerlySerializedAs("JointObject")] public GameObject mJointObject;
 
     private Dictionary<ulong, GameObject> Bodies = new Dictionary<ulong, GameObject>();
-    private List<JointType> joints = new List<JointType>
+    private List<JointType> _joints = new List<JointType>
     {
         JointType.HandLeft,
         JointType.HandRight,
@@ -26,7 +28,8 @@ public class BodyView : MonoBehaviour
     void Update()
     {
         #region Kinect Data
-        Body[] data = bdsm.GetData();
+        _BodyManager = BodySourceManager.GetComponent<BodySourceManager>();
+         Body[] data = _BodyManager.GetData();
         if (data == null)
             return;
         List<ulong> trackIds = new List<ulong>();
@@ -70,10 +73,10 @@ public class BodyView : MonoBehaviour
     private GameObject CreateBodyObject(ulong id)
     {
         GameObject body = new GameObject("Body:" + id);
-        foreach(JointType joint in joints)
+        foreach(JointType joint in _joints)
         {
-            GameObject newJoint = Instantiate(JointObject);
-            newJoint.name = joints.ToString();
+            GameObject newJoint = Instantiate(mJointObject);
+            newJoint.name = _joints.ToString();
 
             newJoint.transform.parent = body.transform;
         }
@@ -81,13 +84,13 @@ public class BodyView : MonoBehaviour
     }
     private void UpdateBodyObject(Body body,GameObject bodyObject)
     {
-        foreach(JointType joint in joints)
+        foreach(JointType _joint in _joints)
         {
-            Joint sourceJoint = body.Joints[joint];
+            Joint sourceJoint = body.Joints[_joint];
             Vector3 targetPosition = GetVector3FromJoint(sourceJoint);
             targetPosition.z = 0;
 
-            Transform jointObject = bodyObject.transform.Find(joint.ToString());
+            Transform jointObject = bodyObject.transform.Find(_joint.ToString());
             jointObject.position = targetPosition;
         }
     }
