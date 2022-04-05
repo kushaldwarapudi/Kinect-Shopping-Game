@@ -7,6 +7,10 @@ using UnityEngine.SceneManagement;
 public class GiftsCounter : MonoBehaviour
 {
     public Text scoreText;
+    public GameObject CongratulationsCanv;
+    public GameObject GameViewCanv;
+
+    public float TimeDelay = 5f;
     public int ScoreValue;
     public float time;
     public Text TimerText;
@@ -17,6 +21,8 @@ public class GiftsCounter : MonoBehaviour
         time = 60f;
         TimerText.text = "Timer : " + " " + (Mathf.Floor(time % 60f).ToString("00"));
         scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
+        CongratulationsCanv.SetActive(false);
+        GameViewCanv.SetActive(true);
     }
 
     // Update is called once per frame
@@ -32,18 +38,29 @@ public class GiftsCounter : MonoBehaviour
            
             if(ScoreValue < 14)
             {
+                
                 SceneManager.LoadScene(2);
             }
         }
         if (ScoreValue >= 14)
         {
-            SceneManager.LoadScene(1);
+            StartCoroutine(captureScreen());
         }
     }
     public void CountScore()
     {
         ScoreValue++;
         scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
+    }
+
+    public IEnumerator captureScreen()
+    {
+        CongratulationsCanv.SetActive(true);
+        GameViewCanv.SetActive(false);
+        yield return new WaitForSeconds(TimeDelay);
+        ScreenCapture.CaptureScreenshot("Oberoi"+System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+        Debug.Log("Pic Taken");
+        
     }
     private void OnTriggerEnter(Collider other)
     {

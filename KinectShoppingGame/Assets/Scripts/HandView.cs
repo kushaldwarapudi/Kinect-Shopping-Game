@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -28,4 +29,6 @@ public class HandView : MonoBehaviour
             return;
        // collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
+
+   
 }

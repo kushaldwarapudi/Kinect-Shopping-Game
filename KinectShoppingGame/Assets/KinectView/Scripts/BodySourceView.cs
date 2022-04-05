@@ -57,15 +57,13 @@ public class BodySourceView : MonoBehaviour
             if (body == null)
                 continue;
 
-            if (body.IsTracked)
-            {
-                // If body isn't tracked, create body
-                if (!mBodies.ContainsKey(body.TrackingId))
-                    mBodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
+            if (!body.IsTracked) continue;
+            // If body isn't tracked, create body
+            if (!mBodies.ContainsKey(body.TrackingId))
+                mBodies[body.TrackingId] = CreateBodyObject(body.TrackingId);
 
-                // Update positions
-                UpdateBodyObject(body, mBodies[body.TrackingId]);
-            }
+            // Update positions
+            UpdateBodyObject(body, mBodies[body.TrackingId]);
         }
         #endregion
     }
@@ -73,17 +71,25 @@ public class BodySourceView : MonoBehaviour
     private GameObject CreateBodyObject(ulong id)
     {
         // Create body parent
-        GameObject body = new GameObject("Body:" + id);
+        var body = new GameObject("Body:" + id);
 
         // Create joints
-        foreach (JointType joint in _joints)
+        foreach (var joint in _joints)
         {
-            // Create Object
-            GameObject newJoint = Instantiate(mJointObject);
-            newJoint.name = joint.ToString();
+            if (joint == JointType.HandLeft)
+            {
+                var newJoint = Instantiate(mJointObject, body.transform.position,new Quaternion(0,180,0,0), body.transform);
+                newJoint.name = joint.ToString();
 
-            // Parent to body
-            newJoint.transform.parent = body.transform;
+                // Parent to body
+            }else
+            {
+                // Create Object
+                var newJoint = Instantiate(mJointObject, body.transform.position,new Quaternion(0,0,0,0), body.transform);
+                newJoint.name = joint.ToString();
+
+                // Parent to body
+            }
         }
 
         return body;
