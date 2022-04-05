@@ -14,7 +14,7 @@ public class HandView : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        HandMesh.position = Vector3.Lerp(HandMesh.position, transform.position, Time.deltaTime * 15f);
+        HandMesh.position = transform.position;
     }
     //private void OnTriggerEnter(Collider other)
     //{
@@ -26,6 +26,6 @@ public class HandView : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Gift"))
             return;
-        collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+       // collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
     }
 }

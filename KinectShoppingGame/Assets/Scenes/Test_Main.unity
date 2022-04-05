@@ -768,7 +768,7 @@ MonoBehaviour:
   SpawnPoints:
   - {fileID: 1544230617}
   - {fileID: 341540200}
-  MinDelay: 1
+  MinDelay: 0.5
   MaxDelay: 2
   RandomGift: 0
 --- !u!1 &1292569541
@@ -1090,7 +1090,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: d6f5d0b5b5713ed47a3ade57dc23ef2e, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []

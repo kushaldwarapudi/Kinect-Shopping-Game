@@ -16,7 +16,7 @@ public class GiftsCounter : MonoBehaviour
         ScoreValue = 0;
         time = 60f;
         TimerText.text = "Timer : " + " " + (Mathf.Floor(time % 60f).ToString("00"));
-        scoreText.text = "Score : " + " " + ScoreValue.ToString();
+        scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
     }
 
     // Update is called once per frame
@@ -27,9 +27,10 @@ public class GiftsCounter : MonoBehaviour
         if (time <= 0)
         {
             time = 0;
+            TimerText.text=  "Timer : "+" " + (Mathf.Floor(time % 60f).ToString("00"));
             Debug.Log("TImeUp");
            
-            if(ScoreValue==0)
+            if(ScoreValue < 14)
             {
                 SceneManager.LoadScene(2);
             }
@@ -42,7 +43,7 @@ public class GiftsCounter : MonoBehaviour
     public void CountScore()
     {
         ScoreValue++;
-        scoreText.text = "Score : "+" "+ ScoreValue.ToString();
+        scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
     }
     private void OnTriggerEnter(Collider other)
     {

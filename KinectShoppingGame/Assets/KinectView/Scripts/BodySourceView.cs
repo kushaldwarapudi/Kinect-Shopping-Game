@@ -91,6 +91,7 @@ public class BodySourceView : MonoBehaviour
 
     private void UpdateBodyObject(Body body, GameObject bodyObject)
     {
+        
         // Update joints
         foreach (JointType _joint in _joints)
         {
