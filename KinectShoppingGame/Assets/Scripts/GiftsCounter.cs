@@ -14,6 +14,9 @@ public class GiftsCounter : MonoBehaviour
     public int ScoreValue;
     public float time;
     public Text TimerText;
+
+    public int countdowntime;
+    public Text CountDownText;
     // Start is called before the first frame update
     void Start()
     {
@@ -23,6 +26,7 @@ public class GiftsCounter : MonoBehaviour
         scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
         CongratulationsCanv.SetActive(false);
         GameViewCanv.SetActive(true);
+        this.enabled = false;
     }
 
     // Update is called once per frame
@@ -39,7 +43,7 @@ public class GiftsCounter : MonoBehaviour
             if(ScoreValue < 14)
             {
                 
-                SceneManager.LoadScene(2);
+                SceneManager.LoadScene(3);
             }
         }
         if (ScoreValue >= 14)
@@ -56,10 +60,20 @@ public class GiftsCounter : MonoBehaviour
     public IEnumerator captureScreen()
     {
         CongratulationsCanv.SetActive(true);
+        CountDownText.gameObject.SetActive(true);
         GameViewCanv.SetActive(false);
-        yield return new WaitForSeconds(TimeDelay);
+        while (countdowntime > 0)
+        {
+            CountDownText.text = countdowntime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdowntime--;
+        }
+        CountDownText.text = "Go!";
+        yield return new WaitForSeconds(1f);
+        CountDownText.gameObject.SetActive(false);
         ScreenCapture.CaptureScreenshot("Oberoi"+System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
         Debug.Log("Pic Taken");
+        
         
     }
     private void OnTriggerEnter(Collider other)

@@ -1,20 +1,38 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GiftManager : MonoBehaviour
 {
     public GameObject[] Gifts;
+    public GiftsCounter giftCounter;
     public Transform[] SpawnPoints;
     public float MinDelay;
     public float MaxDelay;
     public int RandomGift;
+    public int countdowntime;
+    public Text CountDownText;
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(SpawnGifts());
+        StartCoroutine(CountDownTimer());
     }
 
+    public IEnumerator CountDownTimer()
+    {
+        while (countdowntime > 0)
+        {
+            CountDownText.text = countdowntime.ToString();
+            yield return new WaitForSeconds(1f);
+            countdowntime--;
+        }
+        CountDownText.text = "Go!";
+        yield return new WaitForSeconds(1f);
+        CountDownText.gameObject.SetActive(false);
+        giftCounter.enabled = true;
+        StartCoroutine(SpawnGifts());
+    }
     // Update is called once per frame
     void Update()
     {
