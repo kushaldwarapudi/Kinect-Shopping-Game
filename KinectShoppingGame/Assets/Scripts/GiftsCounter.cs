@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class GiftsCounter : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class GiftsCounter : MonoBehaviour
 
     public int countdowntime;
     public Text CountDownText;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -27,6 +29,9 @@ public class GiftsCounter : MonoBehaviour
         CongratulationsCanv.SetActive(false);
         GameViewCanv.SetActive(true);
         this.enabled = false;
+        
+
+
     }
 
     // Update is called once per frame
@@ -71,7 +76,13 @@ public class GiftsCounter : MonoBehaviour
         CountDownText.text = "Go!";
         yield return new WaitForSeconds(1f);
         CountDownText.gameObject.SetActive(false);
-        ScreenCapture.CaptureScreenshot("Oberoi"+System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+        string directory = Application.dataPath + "/WinnersImages/";
+        if (!Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+        var imagename = "Oberoi" + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        ScreenCapture.CaptureScreenshot(Path.Combine(directory,imagename));
         Debug.Log("Pic Taken");
         
         

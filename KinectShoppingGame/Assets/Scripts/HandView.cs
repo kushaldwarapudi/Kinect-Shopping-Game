@@ -27,7 +27,8 @@ public class HandView : MonoBehaviour
     {
         if (!collision.gameObject.CompareTag("Gift"))
             return;
-       // collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        // collision.gameObject.GetComponent<Rigidbody>().useGravity = true;
+        
     }
 
    
