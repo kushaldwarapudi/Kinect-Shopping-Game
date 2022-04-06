@@ -24,7 +24,7 @@ public class GiftsCounter : MonoBehaviour
     {
         ScoreValue = 0;
         time = 60f;
-        TimerText.text = "Timer : " + " " + (Mathf.Floor(time % 60f).ToString("00"));
+        TimerText.text = "Timer : " + " 60";
         scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
         CongratulationsCanv.SetActive(false);
         GameViewCanv.SetActive(true);
@@ -48,7 +48,7 @@ public class GiftsCounter : MonoBehaviour
             if(ScoreValue < 14)
             {
                 
-                SceneManager.LoadScene(3);
+                SceneManager.LoadScene(2);
             }
         }
         if (ScoreValue >= 14)
@@ -59,6 +59,7 @@ public class GiftsCounter : MonoBehaviour
     public void CountScore()
     {
         ScoreValue++;
+       // ScoreValue=ScoreValue+14;
         scoreText.text = "Score : "+"  "+ ScoreValue.ToString()+" / 14";
     }
 
@@ -73,7 +74,7 @@ public class GiftsCounter : MonoBehaviour
             yield return new WaitForSeconds(1f);
             countdowntime--;
         }
-        CountDownText.text = "Go!";
+        CountDownText.text = "READY!";
         yield return new WaitForSeconds(1f);
         CountDownText.gameObject.SetActive(false);
         string directory = Application.dataPath + "/WinnersImages/";
@@ -81,11 +82,14 @@ public class GiftsCounter : MonoBehaviour
         {
             Directory.CreateDirectory(directory);
         }
-        var imagename = "Oberoi" + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss");
+        var imagename = "Oberoi" + System.DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss")+".png";
         ScreenCapture.CaptureScreenshot(Path.Combine(directory,imagename));
         Debug.Log("Pic Taken");
-        
-        
+        yield return new WaitForSeconds(10f);
+       var s= SceneManager.GetActiveScene().buildIndex;
+       SceneManager.LoadScene(s);
+
+
     }
     private void OnTriggerEnter(Collider other)
     {

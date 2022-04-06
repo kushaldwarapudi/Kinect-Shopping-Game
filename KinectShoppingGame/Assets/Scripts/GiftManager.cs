@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GiftManager : MonoBehaviour
 {
+    public static GiftManager Instance;
     public GameObject[] Gifts;
     public GiftsCounter giftCounter;
     public Transform[] SpawnPoints;
@@ -13,12 +15,19 @@ public class GiftManager : MonoBehaviour
     public int RandomGift;
     public int countdowntime;
     public Text CountDownText;
+    public TMP_Text ClapText;
+    
     // Start is called before the first frame update
     void Start()
     {
-        StartCoroutine(CountDownTimer());
+        Instance = this;
     }
 
+    public void StartGame()
+    {
+        ClapText.gameObject.SetActive(false);
+        StartCoroutine(CountDownTimer());
+    }
     public IEnumerator CountDownTimer()
     {
         while (countdowntime > 0)

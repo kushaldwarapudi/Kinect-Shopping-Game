@@ -27,11 +27,5 @@ public class GameFlowManager : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.CompareTag("Start"))
-        {
-            StartGame();
-        }
-    }
+    
 }
