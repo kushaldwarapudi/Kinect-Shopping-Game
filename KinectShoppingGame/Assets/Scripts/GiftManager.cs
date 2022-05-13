@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GiftManager : MonoBehaviour
 {
@@ -16,17 +17,25 @@ public class GiftManager : MonoBehaviour
     public int countdowntime;
     public Text CountDownText;
     public TMP_Text ClapText;
+    public GameObject TVDisplay;
+    public GameObject ShoppingBag;
+    public bool GameStarted;
     
     // Start is called before the first frame update
     void Start()
     {
         Instance = this;
+        GameStarted = false;
+        ClapText.gameObject.SetActive(true);
     }
 
     public void StartGame()
     {
         ClapText.gameObject.SetActive(false);
+        TVDisplay.SetActive(false);
+        ShoppingBag.SetActive(true);
         StartCoroutine(CountDownTimer());
+        GameStarted = true;
     }
     public IEnumerator CountDownTimer()
     {
@@ -45,7 +54,19 @@ public class GiftManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            ResetGame();
+        }
+        if (Input.GetKeyDown(KeyCode.S) && !GameStarted)
+        {
+            StartGame();
+        }
+    }
+    public void ResetGame()
+    {
+        var s = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(s);
     }
     public IEnumerator SpawnGifts()
     {

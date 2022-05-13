@@ -5,27 +5,25 @@ using UnityEngine.SceneManagement;
 
 public class GameFlowManager : MonoBehaviour
 {
+    public static GameFlowManager Instance;
     // Start is called before the first frame update
     void Start()
     {
-        
+        Instance = this;
+        StartCoroutine(ResetGAme());
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.KeypadEnter))
-        {
-            ResetGame();
-        }
+
     }
-    public void StartGame()
+    public IEnumerator ResetGAme()
     {
-        SceneManager.LoadScene(1);
-    }
-    public void ResetGame()
-    {
+        yield return new WaitForSeconds(5f);
         SceneManager.LoadScene(0);
+        
     }
+    
     
 }

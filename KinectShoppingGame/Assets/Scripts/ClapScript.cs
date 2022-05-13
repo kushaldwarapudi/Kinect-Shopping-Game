@@ -13,7 +13,7 @@ public class ClapScript : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.name);
-        if(gamestart)
+        if (gamestart)
             return;
         if (collision.gameObject.name == "HandLeft" || collision.gameObject.name == "HandRight")
         {
